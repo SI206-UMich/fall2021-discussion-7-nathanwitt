@@ -25,7 +25,7 @@ def find_word(string_list):
     # initialize an empty list
     result = []
     # define the regular expression
-    target = r'(\w)[0-9][0-9][0-9](\w)'
+    target = r'\b([A-Za-z]+)\d{3}([A-Za-z]+)'
     # loop through each line of the string list 
     for line in string_list:
         
@@ -35,9 +35,10 @@ def find_word(string_list):
         for word in words:
             result.append(word)
     #return the list of all words that start with the letter B, E, or T
-    for word in result:
+    '''for word in result:
         if word[0] != "B" and word[0] != "E" and word[0] != "T":
             result.pop(result.index(word))
+            '''
     
     return result
 
@@ -49,7 +50,7 @@ def find_days(string_list):
     result = []
 
     # define the regular expression
-    target = r'(\b[0-9][0-9][\/][0-9][0-9][\/][0-9][0-9][0-9][0-9]\b'
+    target = r'(\b\d{1,2}[\/](\d{1,2})[\/](\d{4})\b)'
     # loop through each line of the string list
     for line in string_list:
 
@@ -57,7 +58,7 @@ def find_days(string_list):
         dates = re.findall(target, line)
     # loop through the found dates and only add the days to your empty list 
         for date in dates:
-            result.append(date)
+            result.append(date[1])
     #return the list of days
     return result
 
@@ -67,7 +68,7 @@ def find_domains(string_list):
     # initialize an empty list
     result = []
     # define the regular expression
-    target = r'https://[\w.]+'
+    target = r'https?://[\w.]+'
     # loop through each line of the string list
     for line in string_list:
 
@@ -77,7 +78,7 @@ def find_domains(string_list):
         for domain in domains:
     # get the domain name by splitting the (//) after the https or http to get the website name
     # then strip the www. to get only the domain name
-            final = domain.split('//')[1].split('www.')
+            final = domain.split('//')[1].strip('www.')
     # add the domains to your empty list
             result.append(final)
     #return the list of domains
